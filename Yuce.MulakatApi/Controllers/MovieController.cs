@@ -56,7 +56,9 @@ namespace Yuce.MulakatApi.Controllers
         [HttpPost]
         public dynamic getMovie([FromForm] Guid MoviePK)
         {
-            dynamic result = new MovieDA(_configuration).getMovie(MoviePK);
+            string userId = User.FindFirst(JwtRegisteredClaimNames.Jti)?.Value;
+
+            dynamic result = new MovieDA(_configuration).getMovie(MoviePK, Guid.Parse(userId));
 
             return result;
         }

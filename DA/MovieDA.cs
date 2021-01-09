@@ -46,7 +46,7 @@ namespace DA
         #endregion
 
         #region getMovie
-        public dynamic getMovie(Guid MoviePK)
+        public dynamic getMovie(Guid MoviePK, Guid UserPK)
         {
             try
             {
@@ -93,6 +93,10 @@ namespace DA
                         movie.MovieRating = ratings.Select(item => item.Rating).Average();
                     else
                         movie.MovieRating = 0;
+
+                    UserMovieRating user_rating = ratings.Where(p => p.UserProfileFK == UserPK).FirstOrDefault();
+
+                    movie.UserMovieRating = (user_rating != null ? user_rating.Rating : 0);
                 }
 
                 return new { ResultState = true, ResultMessage = "İşlem Başarılı", Data = movie };
