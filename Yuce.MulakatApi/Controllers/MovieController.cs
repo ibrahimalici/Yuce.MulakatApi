@@ -27,6 +27,9 @@ namespace Yuce.MulakatApi.Controllers
         [HttpPost]
         public dynamic Rate([FromForm]UserMovieRating r)
         {
+            if (r.Rating < 1 || r.Rating > 10)
+                return new { ResultState = false, ResultMessage = "Lütfen 1-10 arası değer giriniz..." };
+
             dynamic result = new MovieDA(_config).saveUserMovieRating(r);
 
             return r;
